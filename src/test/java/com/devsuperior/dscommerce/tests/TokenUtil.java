@@ -3,8 +3,6 @@ package com.devsuperior.dscommerce.tests;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.*;
-
 import static io.restassured.RestAssured.given;
 
 public class TokenUtil {
