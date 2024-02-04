@@ -20,7 +20,7 @@ public class ProductControllerRA {
 
     private String clientUsername, clientPassword, adminUsername, adminPassword;
     private String clientToken, adminToken, invalidToken;
-    private Long existingId, nonExistingId;
+    private Long existingId, nonExistingId, dependentId;
     private String productName;
 
     private Map<String, Object> postProductInstance;
@@ -273,5 +273,70 @@ public class ProductControllerRA {
                 .statusCode(401);
 
     }
+
+    @Test
+    public void deleteShouldReturnNoContentWhenIdExistsAndAdminLogged() {
+        existingId = 25L;
+
+        given()
+                .header("Authorization", "Bearer " + adminToken)
+                .when()
+                .delete("/products/{id}", existingId)
+                .then()
+                .statusCode(204);
+
+
+    }
+
+    @Test
+    public void deleteShouldReturnNotFoundWhenIdDoesNotExistsAndAdminLogged() {
+        nonExistingId = 100L;
+
+        given()
+                .header("Authorization", "Bearer " + adminToken)
+                .when()
+                .delete("/products/{id}", nonExistingId)
+                .then()
+                .statusCode(404)
+                .body("error", equalTo("Recurso não encontrado"))
+                .body("status", equalTo(404));
+    }
+
+    @Test
+    public void deleteShouldReturnBadRequestWhenDependentIdAndAdminLogged() {
+        dependentId = 3L;
+
+        given()
+                .header("Authorization", "Bearer " + adminToken)
+                .when()
+                .delete("/products/{id}", dependentId)
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    public void deleteShouldReturnForbiddenWhenClientLogged() {
+        existingId = 25L;
+
+        given()
+                .header("Authorization", "Bearer " + clientToken)
+                .when()
+                .delete("/products/{id}", existingId)
+                .then()
+                .statusCode(403);
+    }
+
+    @Test
+    public void deleteShouldReturnUnauthorizedWhenInvalidToken() {
+        existingId = 25L;
+
+        given()
+                .header("Authorization", "Bearer " + invalidToken)
+                .when()
+                .delete("/products/{id}", existingId)
+                .then()
+                .statusCode(401);
+    }
+
 
 }
