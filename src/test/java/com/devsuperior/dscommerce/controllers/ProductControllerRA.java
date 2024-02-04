@@ -124,15 +124,14 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(201)
-                .body("name", equalTo("Meu produto"))
-                .body("price", is(50.0F))
-                .body("imgUrl", equalTo("https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg"))
-                .body("categories.id", hasItems(2, 3));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(201)
+                    .body("name", equalTo("Meu produto"))
+                    .body("price", is(50.0F))
+                    .body("imgUrl", equalTo("https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg"))
+                    .body("categories.id", hasItems(2, 3));
 
 
     }
@@ -148,12 +147,11 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(422)
-                .body("errors.message[0]", equalTo("Nome precisar ter de 3 a 80 caracteres"));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(422)
+                    .body("errors.message[0]", equalTo("Nome precisar ter de 3 a 80 caracteres"));
 
     }
 
@@ -168,12 +166,11 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(422)
-                .body("errors.message[0]", equalTo("Descrição precisa ter no mínimo 10 caracteres"));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(422)
+                    .body("errors.message[0]", equalTo("Descrição precisa ter no mínimo 10 caracteres"));
 
     }
 
@@ -188,12 +185,11 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(422)
-                .body("errors.message[0]", equalTo("O preço deve ser positivo"));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(422)
+                    .body("errors.message[0]", equalTo("O preço deve ser positivo"));
     }
 
     @Test
@@ -207,12 +203,11 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(422)
-                .body("errors.message[0]", equalTo("O preço deve ser positivo"));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(422)
+                    .body("errors.message[0]", equalTo("O preço deve ser positivo"));
     }
 
     @Test
@@ -226,12 +221,11 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(422)
-                .body("errors.message[0]", equalTo("Deve ter pelo menos uma categoria"));
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(422)
+                    .body("errors.message[0]", equalTo("Deve ter pelo menos uma categoria"));
 
     }
 
@@ -246,11 +240,10 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(403);
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(403);
 
 
     }
@@ -266,11 +259,10 @@ public class ProductControllerRA {
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-
-                .when()
-                .post("/products")
-                .then()
-                .statusCode(401);
+                    .when()
+                    .post("/products")
+                    .then()
+                    .statusCode(401);
 
     }
 
@@ -281,9 +273,9 @@ public class ProductControllerRA {
         given()
                 .header("Authorization", "Bearer " + adminToken)
                 .when()
-                .delete("/products/{id}", existingId)
-                .then()
-                .statusCode(204);
+                    .delete("/products/{id}", existingId)
+                    .then()
+                    .statusCode(204);
 
 
     }
@@ -295,11 +287,11 @@ public class ProductControllerRA {
         given()
                 .header("Authorization", "Bearer " + adminToken)
                 .when()
-                .delete("/products/{id}", nonExistingId)
-                .then()
-                .statusCode(404)
-                .body("error", equalTo("Recurso não encontrado"))
-                .body("status", equalTo(404));
+                    .delete("/products/{id}", nonExistingId)
+                    .then()
+                    .statusCode(404)
+                    .body("error", equalTo("Recurso não encontrado"))
+                    .body("status", equalTo(404));
     }
 
     @Test
@@ -309,9 +301,9 @@ public class ProductControllerRA {
         given()
                 .header("Authorization", "Bearer " + adminToken)
                 .when()
-                .delete("/products/{id}", dependentId)
-                .then()
-                .statusCode(400);
+                    .delete("/products/{id}", dependentId)
+                    .then()
+                    .statusCode(400);
     }
 
     @Test
@@ -321,9 +313,9 @@ public class ProductControllerRA {
         given()
                 .header("Authorization", "Bearer " + clientToken)
                 .when()
-                .delete("/products/{id}", existingId)
-                .then()
-                .statusCode(403);
+                    .delete("/products/{id}", existingId)
+                    .then()
+                    .statusCode(403);
     }
 
     @Test
@@ -333,9 +325,9 @@ public class ProductControllerRA {
         given()
                 .header("Authorization", "Bearer " + invalidToken)
                 .when()
-                .delete("/products/{id}", existingId)
-                .then()
-                .statusCode(401);
+                    .delete("/products/{id}", existingId)
+                    .then()
+                    .statusCode(401);
     }
 
 
